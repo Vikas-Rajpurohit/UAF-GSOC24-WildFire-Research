@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Management Research</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Forest Fire and Smoke Research</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/upload">Wildfire</a></li>
+                <li><a href="/models">Model</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+        <section class="card" onclick="window.location.href='/upload'">
+            <h2>Wildfire Management System</h2>
+            <p>Upload and analyze videos to detect forest fire and smoke.</p>
+        </section>
+        <section class="card" onclick="window.location.href='/models'">
+            <h2>Model Metrics</h2>
+            <p>View and sort model performance metrics.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Forest Fire Management Research. All rights reserved.</p>
+    </footer>
+</body>
+</html>
