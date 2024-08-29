@@ -15,7 +15,7 @@ def smoke_pixel_segmentation(image):
     
     return smoke_mask
 
-def smoke_flow(im, prev, smoke_mask, wind_dir, processed_frame, n=30):
+def smoke_flow(im, prev, smoke_mask, wind_dir, processed_frame, n):
     curr = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     
 #     pyr_scale, levels, winsize, iterations, poly_n, poly_sigma
@@ -41,7 +41,9 @@ def smoke_flow(im, prev, smoke_mask, wind_dir, processed_frame, n=30):
                     cv2.arrowedLine(processed_frame, (x, y), end_point, (255, 0, 0), 2, tipLength=3)
 
     avg_direction_angle = np.arctan2(np.mean(avgy), np.mean(avgx))
-    wind_dir.append(np.degrees(avg_direction_angle))
+    angle_in_degrees = np.degrees(avg_direction_angle)
+    cv2.putText(processed_frame, f'Smoke Direction: {angle_in_degrees:.2f}', (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+    wind_dir.append(angle_in_degrees)
         
     smoke_dir_nframes = None
     if len(wind_dir) > n:

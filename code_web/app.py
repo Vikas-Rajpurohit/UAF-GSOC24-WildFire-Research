@@ -21,6 +21,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 threads = True
 size_factor = 1
+mFrames = 180
+nFrames = 30
 
 @socketio.on('stop_processing')
 def stop_stream():
@@ -52,8 +54,10 @@ def handle_upload():
     video_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     video_file.save(video_path)
 
-    global size_factor
+    global size_factor, mFrames, nFrames
     size_factor = int(request.form.get('sizeFactor'))
+    mFrames = int(request.form.get('mFrames'))
+    nFrames = int(request.form.get('nFrames'))
     
     is_camera_stable = request.form.get('cameraStable') == 'on'
     run_yolo_detection = request.form.get('runYolo') == 'on'
@@ -117,7 +121,7 @@ def process_stable_camera(video_path):
         
         #######################################
         fire_mask = fire_pixel_segmentation(im)
-        area, new_area_frame, processed_frame, end_point = fire_flow(fire_mask, area_frame, fireX, fireY, processed_frame)
+        area, new_area_frame, processed_frame, end_point = fire_flow(fire_mask, area_frame, fireX, fireY, processed_frame, mFrames)
         area_frame = new_area_frame
         
         if end_point != None:
@@ -127,7 +131,7 @@ def process_stable_camera(video_path):
         
         #########################################
         smoke_mask = smoke_pixel_segmentation(im)
-        curr, processed_frame, smoke = smoke_flow(im, prev, smoke_mask, wind_dir, processed_frame)
+        curr, processed_frame, smoke = smoke_flow(im, prev, smoke_mask, wind_dir, processed_frame, nFrames)
         prev = curr
         
         if smoke != None:
@@ -137,6 +141,15 @@ def process_stable_camera(video_path):
             start_point = path[0]
             end_point = path[-1]
             cv2.arrowedLine(processed_frame, start_point, end_point, (0, 255, 0), 2, tipLength=0.5)
+
+            delta_x = end_point[0] - start_point[0]
+            delta_y = end_point[1] - start_point[1]
+
+            angle_rad = np.arctan2(delta_y, delta_x)
+            angle_deg = np.degrees(angle_rad)
+
+            text_position = (start_point[0] + 10, start_point[1] - 10)
+            cv2.putText(processed_frame, f'Fire Spread Direction: {angle_deg:.2f}', text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
             
         # cv2.imshow('Frame', im)
         

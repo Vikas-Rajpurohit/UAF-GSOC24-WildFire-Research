@@ -37,7 +37,7 @@ def fire_pixel_segmentation(image):
     
     return fire_mask
 
-def fire_flow(fire_mask, area_frame, fireX, fireY, processed_frame, m=180):
+def fire_flow(fire_mask, area_frame, fireX, fireY, processed_frame, m):
     
     centerX = []
     centerY = []
