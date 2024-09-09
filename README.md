@@ -30,7 +30,7 @@
 Download wildfire videos [Google Drive](https://drive.google.com/drive/folders/13rKzSe9je3NbLef-sT9k_1ldjVA7FJbW?usp=sharing).
 
 ## *Dataset*
-Download the dataset [Roboflow]().
+Download the dataset (No Augmentation) [Roboflow](https://app.roboflow.com/ds/OWEUFonh9I?key=fWJ2cc1Qlw).
 
 ## *Results*
 
@@ -44,7 +44,7 @@ Download the dataset [Roboflow]().
 ![Image 3](images/test5_analysis.png)
 
 ## *Documentation*
-For detailed function explanations, please refer to our [Google Doc](https://docs.google.com/document/d/1ibWxNxHIlFAsgaGLRBZVBcKMjpvNC0qOaEbWtlkSTVI/edit?usp=sharing).
+For detailed code explanation, please refer to our [Google Doc](https://docs.google.com/document/d/1ibWxNxHIlFAsgaGLRBZVBcKMjpvNC0qOaEbWtlkSTVI/edit?usp=sharing).
 
 ## *Contributing*
 We welcome contributions to this research work.
